@@ -31,16 +31,39 @@ public class StableAspect : MonoBehaviour {
         float aspectRatio = (float)Screen.height / (float)Screen.width;
         // カメラコンポーネントを取得
         cam = GetComponent<Camera>();
+        //                  X  Y    W     H
+        //cam.rect = new Rect(0.5f, 0, 0.5f, 1.0f);
         // カメラのorthographicSizeを設定
+        // 縦合わせ（縦サイズを計算）
+        cam.orthographicSize = height / 2f / pixelPerUnit;
         if (match == Match.Height)
         {
-            // 縦合わせ（縦サイズを計算）
-            cam.orthographicSize = height / 2f / pixelPerUnit;
+            //// 縦合わせ（縦サイズを計算）
+            //cam.orthographicSize = height / 2f / pixelPerUnit;
+            // 描画領域の横幅割合を計算
+            float viewportW = width * Screen.height / height / Screen.width;
+            // 余白の割合を計算
+            float blankW = 1.0f - viewportW;
+            // 開始位置を余白の半分にする
+            float viewportX = blankW/2.0f;
+            // ビューポート領域の指定
+            cam.rect = new Rect(viewportX, 0, viewportW, 1.0f);
         }
         else
         {
+            //// 縦合わせ（縦サイズを計算）
+            //cam.orthographicSize = height / 2f / pixelPerUnit;
+            // 描画領域の縦幅割合を計算
+            float viewportH = height * Screen.width / width / Screen.height;
+            // 余白の割合を計算
+            float blankH = 1.0f - viewportH;
+            // 開始位置を余白の半分にする
+            float viewportY = blankH / 2.0f;
+            // ビューポート領域の指定
+            cam.rect = new Rect(0, viewportY, 1.0f, viewportH);
+
             // 横合わせ（縦サイズを計算）
-            cam.orthographicSize = width / 2f / pixelPerUnit * aspectRatio;
+            //cam.orthographicSize = width / 2f / pixelPerUnit * aspectRatio;
         }
     }
 
