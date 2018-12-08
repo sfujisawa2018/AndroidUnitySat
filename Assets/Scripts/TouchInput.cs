@@ -9,10 +9,18 @@ public class TouchInput : MonoBehaviour {
     // テキストコンポーネント
     private Text textComponent;
 
+    // メインカメラ
+    private Camera cam;
+
+    // プレハブ
+    public GameObject prefabHorie;
+
 	// Use this for initialization
 	void Start () {
         // テキストコンポーネントを取得
         textComponent = GetComponent<Text>();
+        // メインカメラを取得
+        cam = Camera.main;
 	}
 	
 	// Update is called once per frame
@@ -25,31 +33,18 @@ public class TouchInput : MonoBehaviour {
             // タッチの数分だけ、一点ずつ処理していく
             foreach(Touch touch in Input.touches)
             {
+                // タッチ座標をスクリーン座標系からワールド座標系に変換
+                Vector2 worldpos = cam.ScreenToWorldPoint(touch.position);
+
+                // タッチ開始の瞬間のみ
                 if (touch.phase == TouchPhase.Began)
                 {
-
+                    // プレハブを複製して配置
+                    Instantiate(prefabHorie, worldpos, Quaternion.identity);
                 }
 
-                switch(touch.phase)
-                {
-                    case TouchPhase.Began:
-                        text = "Began";
-                        break;
-                    case TouchPhase.Moved:
-                        text = "Moved";
-                        break;
-                    case TouchPhase.Stationary:
-                        text = "Stationary";
-                        break;
-                    case TouchPhase.Ended:
-                        text = "Ended";
-                        break;
-                    case TouchPhase.Canceled:
-                        text = "Canceled";
-                        break;
-                }
                 // 文字列の末尾に付け足す　　　　　　　　　　　　　　　　　　　　　改行コード
-                //text += "touch" + touch.fingerId + ":(" + touch.deltaTime + ")" + "\n";
+                text += "touch" + touch.fingerId + ":(" + worldpos.x + "," + worldpos.y + ")" + "\n";
             }
             // 文字列をテキストコンポーネントに反映させる
             textComponent.text = text;
