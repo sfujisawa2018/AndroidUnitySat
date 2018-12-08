@@ -15,6 +15,8 @@ public class TouchInput : MonoBehaviour {
     // プレハブ
     public GameObject prefabHorie;
     public GameObject prefabHiroyuki;
+    // スプライトのゲームオブジェクト
+    private GameObject spriteObj = null;
 
 	// Use this for initialization
 	void Start () {
@@ -46,13 +48,24 @@ public class TouchInput : MonoBehaviour {
                     if (rand == 0)
                     {
                         // プレハブを複製して配置
-                        Instantiate(prefabHorie, worldpos, Quaternion.identity);
+                        spriteObj = Instantiate(prefabHorie, worldpos, Quaternion.identity);
                     }
                     else
                     {
                         // プレハブを複製して配置
-                        Instantiate(prefabHiroyuki, worldpos, Quaternion.identity);
+                        spriteObj = Instantiate(prefabHiroyuki, worldpos, Quaternion.identity);
                     }
+                }
+                else if(touch.phase == TouchPhase.Moved)
+                {
+                    // タッチ座標の位置にスプライトを移動
+                    spriteObj.transform.position = worldpos;
+                }
+                else if(touch.phase == TouchPhase.Ended)
+                {
+                    // スプライトのゲームオブジェクトを破壊
+                    Destroy(spriteObj);
+                    spriteObj = null;
                 }
 
                 // 文字列の末尾に付け足す　　　　　　　　　　　　　　　　　　　　　改行コード

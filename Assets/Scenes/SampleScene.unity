@@ -432,6 +432,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabHorie: {fileID: 1546596828883942, guid: dab60753eb6da484785895231ca16ccf,
     type: 2}
+  prefabHiroyuki: {fileID: 1653425417318254, guid: bcf8ad5a860ffea489f366d4bbe33b1f,
+    type: 2}
 --- !u!1 &1756582932
 GameObject:
   m_ObjectHideFlags: 0
