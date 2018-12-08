@@ -14,6 +14,7 @@ public class TouchInput : MonoBehaviour {
 
     // プレハブ
     public GameObject prefabHorie;
+    public GameObject prefabHiroyuki;
 
 	// Use this for initialization
 	void Start () {
@@ -39,8 +40,19 @@ public class TouchInput : MonoBehaviour {
                 // タッチ開始の瞬間のみ
                 if (touch.phase == TouchPhase.Began)
                 {
-                    // プレハブを複製して配置
-                    Instantiate(prefabHorie, worldpos, Quaternion.identity);
+                    // 0か1が乱数で出る
+                    int rand = Random.Range(0, 2);
+
+                    if (rand == 0)
+                    {
+                        // プレハブを複製して配置
+                        Instantiate(prefabHorie, worldpos, Quaternion.identity);
+                    }
+                    else
+                    {
+                        // プレハブを複製して配置
+                        Instantiate(prefabHiroyuki, worldpos, Quaternion.identity);
+                    }
                 }
 
                 // 文字列の末尾に付け足す　　　　　　　　　　　　　　　　　　　　　改行コード
